@@ -32,6 +32,12 @@
         header("Refresh:0;url=Album.php");
     }
 ?>
+<?php 
+    if (isset($_POST["btnShare"])) {
+        $status = CreateStatus($_POST["status"], 0, $_SESSION["PhotoId"], $_COOKIE["UserId"]);
+        header("Refresh:0;url=Timeline.php");
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,6 +54,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-7">
                     <a href="Album.php" class="btn btn-dark my-3">Go Back</a>
+                    <button class="btn btn-dark" name="ShareStatusModal" data-bs-toggle="modal" data-bs-target="#ShareStatusModal">Share Photo</button>
                     <div style="height: 90vh;">
                         <?php 
                             if ($photo != null) {
@@ -170,6 +177,33 @@
                             <div class="row justify-content-center">
                                 <div class="col-4">
                                     <button type="submit" class="btn btn-danger" id="btnDeletePhoto" name="btnDeletePhoto">Confirm</button>
+                                </div>
+                                <div class="col-4">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ShareStatus Modal -->
+        <div class="modal fade" id="ShareStatusModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Share Photos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="Photo.php" method="post" enctype="multipart/form-data">
+                            <div class="row justify-content-center">
+                                <div class="mb-3">
+                                    <label class="form-label">Wrirte something... Your photo will be public</label>
+                                    <input type="text" class="form-control" id="status" name="status">
+                                </div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-success" id="btnShare" name="btnShare">Share</button>
                                 </div>
                                 <div class="col-4">
                                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
